@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-test-deployment-set
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: cluster1
+            server: https://kubernetes.default.svc
+            env: dev
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev
+          maxUpdate: 100%
+  template:
+    metadata:
+      name: 'nginx-test-deployment-{{cluster}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/ncmuthu/argocd-app-vpa.git
+        targetRevision: HEAD
+        path: argocd
+      destination:
+        server: '{{server}}'
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
