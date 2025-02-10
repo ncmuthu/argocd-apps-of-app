@@ -19,7 +19,6 @@ spec:
               operator: In
               values:
                 - dev
-          maxUpdate: 100%
   template:
     metadata:
       name: 'nginx-test-deployment-{{cluster}}'
