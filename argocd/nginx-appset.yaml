@@ -10,6 +10,7 @@ spec:
           - cluster: cluster1
             server: https://kubernetes.default.svc
             env: dev
+            envLabel: dev
   strategy:
     type: RollingSync
     rollingSync:
