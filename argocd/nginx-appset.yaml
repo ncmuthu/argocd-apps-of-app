@@ -24,6 +24,8 @@ spec:
               operator: In
               values:
                 - prod
+          maxUpdate: 1      
+          minAvailable: 1
         - matchExpressions:
             - key: envLabel
               operator: In
