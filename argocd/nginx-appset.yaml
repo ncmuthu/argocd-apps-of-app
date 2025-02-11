@@ -12,12 +12,18 @@ spec:
               operator: In
               values:
                 - dev
+                - prod                
         values:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
   strategy:
     type: RollingSync
     rollingSync:
       steps:
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - prod
         - matchExpressions:
             - key: envLabel
               operator: In
