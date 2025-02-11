@@ -9,16 +9,24 @@ spec:
         elements:
           - cluster: cluster1
             server: https://kubernetes.default.svc
+            env: dev
             envLabel: dev
   strategy:
     type: RollingSync
     rollingSync:
       steps:
-        - matchLabels:
-            envLabel: dev
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"] 
   template:
     metadata:
       name: 'nginx-test-deployment-{{cluster}}'
+      labels:
+        envLabel: '{{.env}}'      
     spec:
       project: default
       source:
