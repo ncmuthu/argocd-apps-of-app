@@ -30,7 +30,7 @@ spec:
     metadata:
       name: 'nginx-test-deployment-{{.cluster}}'
       labels:
-        envLabel: '{{.values.envLabel}}'
+        envLabel: "dev"
     spec:
       project: default
       source:
