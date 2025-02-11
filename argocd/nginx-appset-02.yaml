@@ -42,7 +42,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/ncmuthu/argocd-app-vpa.git
+        repoURL: https://github.com/ncmuthu/argocd-app-02.git
         targetRevision: HEAD
         path: argocd
       destination:
