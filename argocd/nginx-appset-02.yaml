@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-test-deployment-set-02
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev
+                - prod                
+        values:
+          envLabel: '{{ index .metadata.labels "envLabel" }}'
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev     
+          maxUpdate: 1
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - prod
+          maxUpdate: 1
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"] 
+  template:
+    metadata:
+      name: 'nginx-test-deployment-02'
+      labels:
+        envLabel: '{{ .values.envLabel }}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/ncmuthu/argocd-app-vpa.git
+        targetRevision: HEAD
+        path: argocd
+      destination:
+        server: '{{.server}}'
+        namespace: nginxtest
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
