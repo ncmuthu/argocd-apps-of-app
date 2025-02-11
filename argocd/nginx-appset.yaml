@@ -9,17 +9,13 @@ spec:
         elements:
           - cluster: cluster1
             server: https://kubernetes.default.svc
-            env: dev
             envLabel: dev
   strategy:
     type: RollingSync
     rollingSync:
       steps:
-        - matchExpressions:
-            - key: envLabel
-              operator: In
-              values:
-                - dev
+        - matchLabels:
+            envLabel: dev
   template:
     metadata:
       name: 'nginx-test-deployment-{{cluster}}'
