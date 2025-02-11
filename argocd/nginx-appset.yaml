@@ -23,13 +23,13 @@ spec:
             - key: envLabel
               operator: In
               values:
-                - prod     
+                - dev     
           maxUpdate: 1
         - matchExpressions:
             - key: envLabel
               operator: In
               values:
-                - dev
+                - prod
           maxUpdate: 1
   goTemplate: true
   goTemplateOptions: ["missingkey=error"] 
