@@ -5,10 +5,15 @@ metadata:
   namespace: argocd
 spec:
   generators:
-    - list:
-        elements:
-          - cluster: cluster1
-            server: https://kubernetes.default.svc
+    - clusters:
+        selector:
+          matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev
+        values:
+          envLabel: '{{ index .metadata.labels "envLabel" }}'
   strategy:
     type: RollingSync
     rollingSync:
@@ -23,7 +28,9 @@ spec:
   goTemplateOptions: ["missingkey=error"] 
   template:
     metadata:
-      name: 'nginx-test-deployment-{{.cluster}}'    
+      name: 'nginx-test-deployment-{{.cluster}}'
+      labels:
+        envLabel: '{{.envLabel}}'
     spec:
       project: default
       source:
