@@ -15,6 +15,7 @@ spec:
                 - prod                
         values:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
+          ci: '{{ index .metadata.labels "ci" }}'
   strategy:
     type: RollingSync
     rollingSync:
@@ -35,7 +36,7 @@ spec:
   goTemplateOptions: ["missingkey=error"] 
   template:
     metadata:
-      name: 'nginx-test-deployment-02'
+      name: 'nginx-test-deployment-02-{{ .values.ci }}'
       labels:
         envLabel: '{{ .values.envLabel }}'
     spec:
