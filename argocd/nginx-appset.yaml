@@ -29,6 +29,8 @@ spec:
   template:
     metadata:
       name: 'nginx-test-deployment'
+      labels:
+        envLabel: '{{ .values.envLabel }}'
     spec:
       project: default
       source:
