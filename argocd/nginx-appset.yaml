@@ -23,7 +23,7 @@ spec:
   goTemplateOptions: ["missingkey=error"] 
   template:
     metadata:
-      name: 'nginx-test-deployment-{{.cluster}}'
+      name: 'nginx-test-deployment'
       labels:
         envLabel: "dev"
     spec:
