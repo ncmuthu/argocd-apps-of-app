@@ -24,7 +24,7 @@ spec:
   goTemplateOptions: ["missingkey=error"] 
   template:
     metadata:
-      name: 'nginx-test-deployment-{{cluster}}'
+      name: 'nginx-test-deployment-{{.cluster}}'
       labels:
         envLabel: '{{.env}}'      
     spec:
@@ -34,7 +34,7 @@ spec:
         targetRevision: HEAD
         path: argocd
       destination:
-        server: '{{server}}'
+        server: '{{.server}}'
         namespace: argocd
       syncPolicy:
         automated:
