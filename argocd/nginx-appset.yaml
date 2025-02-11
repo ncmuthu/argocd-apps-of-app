@@ -23,8 +23,7 @@ spec:
             - key: envLabel
               operator: In
               values:
-                - prod
-          maxUpdate: 1      
+                - prod     
           minAvailable: 1
         - matchExpressions:
             - key: envLabel
