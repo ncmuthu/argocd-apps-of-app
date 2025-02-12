@@ -15,6 +15,7 @@ spec:
         values:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
           ci: '{{ index .metadata.labels "ci" }}'
+          upgrade: '{{ index .metadata.labels "upgrade" }}'
   strategy:
     type: RollingSync
     rollingSync:
@@ -42,6 +43,7 @@ spec:
       name: 'nginx-test-deployment-{{ .values.ci }}'
       labels:
         envLabel: '{{ .values.envLabel }}'
+        upgrade: '{{ .values.upgrade }}'
     spec:
       project: default
       source:
