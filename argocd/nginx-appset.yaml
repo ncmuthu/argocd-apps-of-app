@@ -21,6 +21,11 @@ spec:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
           ci: '{{ index .metadata.labels "ci" }}'
           upgrade: '{{ index .metadata.labels "upgrade" }}'
+          targetRevision: >-
+            {{ if eq .metadata.labels.envLabel "dev" }}dev
+            {{ else if eq .metadata.labels.envLabel "prod" }}main
+            {{ else if eq .metadata.labels.envLabel "sb" }}sb
+            {{ else }}HEAD{{ end }}         
   strategy:
     type: RollingSync
     rollingSync:
@@ -63,7 +68,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/ncmuthu/argocd-app-vpa.git
-        targetRevision: HEAD
+        targetRevision: '{{ .values.targetRevision }}'
         path: argocd
       destination:
         server: '{{.server}}'
