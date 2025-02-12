@@ -22,7 +22,7 @@ spec:
           ci: '{{ index .metadata.labels "ci" }}'
           upgrade: '{{ index .metadata.labels "upgrade" }}'
           targetRevision: >-
-            {{- if eq .values.envLabel "dev" -}}dev{{- else if eq .values.envLabel "prod" -}}main{{- else if eq .values.envLabel "sb" -}}sb{{- else -}}HEAD{{- end -}}
+            {{if eq .values.envLabel "dev"}}dev{{else if eq .values.envLabel "prod"}}main{{else if eq .values.envLabel "sb"}}sb{{else }}HEAD{{ end }}
   strategy:
     type: RollingSync
     rollingSync:
