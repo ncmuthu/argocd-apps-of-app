@@ -21,11 +21,7 @@ spec:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
           ci: '{{ index .metadata.labels "ci" }}'
           upgrade: '{{ index .metadata.labels "upgrade" }}'
-          targetRevision: >-
-           {{ if eq .metadata.labels.envLabel "dev" }}dev
-           {{ else if eq .metadata.labels.envLabel "prod" }}main
-           {{ else if eq .metadata.labels.envLabel "sb" }}sb
-           {{ else }}HEAD{{ end }}         
+          targetRevision: "{{- if eq .values.envLabel \"dev\" }}dev{{- else if eq .values.envLabel \"prod\" }}main{{- else if eq .values.envLabel \"sb\" }}sb{{- else }}HEAD{{- end }}"
   strategy:
     type: RollingSync
     rollingSync:
