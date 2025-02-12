@@ -7,15 +7,24 @@ spec:
   generators:
     - clusters:
         selector:
-          matchExpressions:
-            - key: envLabel
-              operator: In
-              values:
-                - dev
-            - key: upgrade
-              operator: In
-              values:
-                - auto                
+          - matchExpressions:
+              - key: envLabel
+                operator: In
+                values:
+                  - dev
+              - key: upgrade
+                operator: In
+                values:
+                  - auto
+          - matchExpressions:
+              - key: envLabel
+                operator: In
+                values:
+                  - dev
+              - key: upgrade
+                operator: In
+                values:
+                  - manual                  
         values:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
           ci: '{{ index .metadata.labels "ci" }}'
@@ -32,8 +41,18 @@ spec:
             - key: upgrade
               operator: In
               values:
+                - manual
+          maxUpdate: 0
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev
+            - key: upgrade
+              operator: In
+              values:
                 - auto
-          maxUpdate: 1
+          maxUpdate: 1          
         - matchExpressions:
             - key: envLabel
               operator: In
