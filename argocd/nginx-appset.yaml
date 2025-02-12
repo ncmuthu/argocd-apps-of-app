@@ -7,16 +7,16 @@ spec:
   generators:
     - clusters:
         selector:
-          - matchExpressions:
-              - key: envLabel
-                operator: In
-                values:
-                  - dev
-              - key: upgrade
-                operator: In
-                values:
-                  - auto
-                  - manual
+          matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev
+            - key: upgrade
+              operator: In
+              values:
+                - auto
+                - manual
         values:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
           ci: '{{ index .metadata.labels "ci" }}'
