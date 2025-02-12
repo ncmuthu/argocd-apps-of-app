@@ -16,15 +16,7 @@ spec:
                 operator: In
                 values:
                   - auto
-          - matchExpressions:
-              - key: envLabel
-                operator: In
-                values:
-                  - dev
-              - key: upgrade
-                operator: In
-                values:
-                  - manual                  
+                  - manual
         values:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
           ci: '{{ index .metadata.labels "ci" }}'
