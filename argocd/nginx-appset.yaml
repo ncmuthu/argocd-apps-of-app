@@ -11,7 +11,11 @@ spec:
             - key: envLabel
               operator: In
               values:
-                - dev               
+                - dev
+            - key: upgrade
+              operator: In
+              values:
+                - auto                
         values:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
           ci: '{{ index .metadata.labels "ci" }}'
