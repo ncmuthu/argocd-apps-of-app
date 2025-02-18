@@ -40,7 +40,6 @@ spec:
       labels:
         envLabel: '{{ .values.envLabel }}'
     spec:
-      project: default
       source:
         repoURL: https://github.com/ncmuthu/argocd-app-02.git
         targetRevision: HEAD
