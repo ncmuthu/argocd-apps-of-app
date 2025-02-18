@@ -63,9 +63,8 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/ncmuthu/argocd-app-vpa.git
-        targetRevision: '{{ .values.targetRevision }}'
-        path: argocd
+        repoURL: https://kubernetes-sigs.github.io/metrics-server
+        targetRevision: 3.12.1
       destination:
         server: '{{.server}}'
         namespace: argocd
