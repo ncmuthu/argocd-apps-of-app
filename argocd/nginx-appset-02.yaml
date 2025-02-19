@@ -25,7 +25,7 @@ spec:
               operator: In
               values:
                 - dev     
-          maxUpdate: 100%
+          maxUpdate: 50%
         - matchExpressions:
             - key: envLabel
               operator: In
