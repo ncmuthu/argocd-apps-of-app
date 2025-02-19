@@ -26,6 +26,8 @@ spec:
               values:
                 - dev     
           maxUpdate: 50%
+        - pause:
+            duration: 5m          
         - matchExpressions:
             - key: envLabel
               operator: In
