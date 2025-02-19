@@ -69,13 +69,16 @@ spec:
         upgrade: '{{ .values.upgrade }}'
     spec:
       project: default
-      source:
-        repoURL: https://kubernetes-sigs.github.io/metrics-server
+      sources:
+      - repoURL: https://github.com/ncmuthu/argocd-apps-of-app.git
+        targetRevision: 'main'
+        ref: values      
+      - repoURL: https://kubernetes-sigs.github.io/metrics-server
         chart: metrics-server
         targetRevision: 3.12.1
         helm:
           valuesFiles:
-            - env/dev/values.yaml     
+            - $values/env/dev/values.yaml     
       destination:
         server: '{{.server}}'
         namespace: argocd
