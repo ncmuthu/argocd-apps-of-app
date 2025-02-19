@@ -20,12 +20,18 @@ spec:
     type: RollingSync
     rollingSync:
       steps:
-        - matchLabels:
-            envLabel: dev     
-          maxUpdate: 1
-        - matchLabels:
-            envLabel: prod
-          maxUpdate: 1
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev     
+          maxUpdate: 50%
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - prod
+          maxUpdate: 50%
   goTemplate: true
   goTemplateOptions: ["missingkey=error"] 
   template:
