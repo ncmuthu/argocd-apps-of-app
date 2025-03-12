@@ -9,3 +9,6 @@ recommender:
     checkpoints-gc-interval: 24h0m0s
 metrics-server:
   enabled: false
+extraManifests:
+  - |
+    {{- .Files.Get "vpa-resources.yaml" | nindent 6 }}
