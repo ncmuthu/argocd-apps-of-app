@@ -35,12 +35,12 @@ spec:
               repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
               revision: main
               files:
-              - path: apps/common/vpa/values.yaml
+              - path: apps/common/vpa/app.yaml
           - git:
               repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
               revision: main
               files:
-              - path: apps/env/{{.values.env}}/vpa/values.yaml
+              - path: apps/env/{{.values.env}}/vpa/app.yaml
           - git:
               repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
               revision: main
