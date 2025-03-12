@@ -17,6 +17,10 @@ spec:
               operator: In
               values:
                 - caas
+            - key: k8s.autodesk.com/vpa
+              operator: In
+              values:
+                - enable
           values:
             moniker: "local-cluster"
             project: "default"
