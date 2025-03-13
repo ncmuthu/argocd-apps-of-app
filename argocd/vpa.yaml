@@ -75,7 +75,7 @@ spec:
         ref: helm
       - repoURL: '{{ .repoURL }}'
         chart: '{{.chart}}'
-        path: vpa
+        path: ''
         targetRevision: '{{ .targetRevision }}'
         helm:
           ignoreMissingValueFiles: true
