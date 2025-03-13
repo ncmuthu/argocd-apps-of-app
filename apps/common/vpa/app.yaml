@@ -1,5 +1,5 @@
 chart: vpa
 targetRevision: 4.7.1
 enabled: 'true'
-repoURL: 'https://github.com/ncmuthu/vpa-umbrella'
+repoURL: 'https://raw.githubusercontent.com/ncmuthu/vpa-umbrella/main'
 namespace: vpa
