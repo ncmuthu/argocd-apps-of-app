@@ -1,5 +1,5 @@
 chart: vpa
-targetRevision: 1.0.0
+targetRevision: 4.7.1
 enabled: 'true'
-repoURL: 'https://raw.githubusercontent.com/ncmuthu/vpa-umbrella/main/vpa'
+repoURL: 'https://charts.fairwinds.com/stable'
 namespace: vpa

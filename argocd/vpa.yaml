@@ -68,7 +68,6 @@ spec:
           prune: true
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply=true
       sources:
       - repoURL: 'https://github.com/ncmuthu/argocd-apps-of-app.git'
         targetRevision: 'main'
