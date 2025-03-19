@@ -66,6 +66,26 @@ spec:
               operator: In
               values:
                 - dev
+            - key: upgrade
+              operator: In
+              values:
+                - manual
+          maxUpdate: 0
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev
+            - key: upgrade
+              operator: In
+              values:
+                - auto
+          maxUpdate: 1          
+        - matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - prod
           maxUpdate: 1
   template:
     metadata:
