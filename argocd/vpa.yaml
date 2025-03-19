@@ -73,8 +73,8 @@ spec:
             - key: k8s.autodesk.com/env
               operator: In
               values:
-                - '{{.values.env}}'
-          maxUpdate: '{{ .maxUpdate }}'
+                - dev
+          maxUpdate: 1
   template:
     metadata:
       name: '{{.values.moniker | lower}}-vpa'
