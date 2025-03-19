@@ -9,4 +9,4 @@ recommender:
   extraArgs:
     kube-api-qps: 20
     kube-api-burst: 50
-    checkpoints-gc-interval: 24h0m0s
+    checkpoints-gc-interval: 6h0m0s
