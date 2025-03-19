@@ -74,7 +74,7 @@ spec:
     metadata:
       name: '{{.values.moniker | lower}}-vpa'
       labels:
-        env: '{{ .values.env }}'
+        k8s.autodesk.com/env: '{{ .values.env }}'
         maxUpdate: '{{ .maxUpdate }}'
     spec:
       project: '{{ .values.project }}'
