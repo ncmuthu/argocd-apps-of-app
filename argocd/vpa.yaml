@@ -93,11 +93,11 @@ spec:
   template:
     metadata:
       name: '{{.values.moniker | lower}}-vpa'
-    spec:
-      project: '{{ .values.project }}'
       labels:
         envLabel: '{{ .values.envLabel }}'
-        upgrade: '{{ .values.upgrade }}'
+        upgrade: '{{ .values.upgrade }}'      
+    spec:
+      project: '{{ .values.project }}'
       syncPolicy:
         automated:
           selfHeal: true
