@@ -69,6 +69,8 @@ spec:
               operator: In
               values:
                 - dev
+                - prod
+                - stage
           maxUpdate: 1
   template:
     metadata:
