@@ -57,6 +57,24 @@ spec:
         operator: In
         values:
         - 'true'
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: k8s.autodesk.com/cluster-class
+              operator: In
+              values:
+                - caas
+            - key: k8s.autodesk.com/vpa
+              operator: In
+              values:
+                - enable
+            - key: k8s.autodesk.com/env
+              operator: In
+              values:
+                - '{{.values.env}}'
+          maxUpdate: '{{ .maxUpdate }}'
   template:
     metadata:
       name: '{{.values.moniker | lower}}-vpa'
