@@ -27,6 +27,9 @@ spec:
               env: "dev"
               region: "us-west-2"
               eksversion: "1.29"
+              envLabel: '{{ index .metadata.labels "envLabel" }}'
+              ci: '{{ index .metadata.labels "ci" }}'
+              upgrade: '{{ index .metadata.labels "upgrade" }}'              
         - merge:
             mergeKeys:
             - 'chart'
@@ -92,6 +95,9 @@ spec:
       name: '{{.values.moniker | lower}}-vpa'
     spec:
       project: '{{ .values.project }}'
+      labels:
+        envLabel: '{{ .values.envLabel }}'
+        upgrade: '{{ .values.upgrade }}'
       syncPolicy:
         automated:
           selfHeal: true
