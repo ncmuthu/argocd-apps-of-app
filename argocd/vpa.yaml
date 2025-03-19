@@ -8,55 +8,55 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   applyNestedSelectors: true
   generators:
-  - matrix:
-      generators:
-      - clusters:
-          selector:
-            matchExpressions:
-            - key: k8s.autodesk.com/cluster-class
-              operator: In
-              values:
-                - caas
-            - key: k8s.autodesk.com/vpa
-              operator: In
-              values:
-                - enable
+    - matrix:
+        generators:
+        - clusters:
+            selector:
+              matchExpressions:
+              - key: k8s.autodesk.com/cluster-class
+                operator: In
+                values:
+                  - caas
+              - key: k8s.autodesk.com/vpa
+                operator: In
+                values:
+                  - enable
+            values:
+              moniker: "local-cluster"
+              project: "default"
+              env: "dev"
+              region: "us-west-2"
+              eksversion: "1.29"
+        - merge:
+            mergeKeys:
+            - 'chart'
+            generators:
+            - git:
+                repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
+                revision: main
+                files:
+                - path: apps/common/vpa/app.yaml
+            - git:
+                repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
+                revision: main
+                files:
+                - path: apps/env/{{.values.env}}/vpa/app.yaml
+            - git:
+                repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
+                revision: main
+                files:
+                - path: apps/env/{{.values.env}}/vpa/values-{{.values.region}}.yaml
+            - git:
+                repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
+                revision: main
+                files:
+                - path: apps/env/{{.values.env}}/vpa/values-eks-{{.values.eksversion}}.yaml
+      selector:
+        matchExpressions:
+        - key: enabled
+          operator: In
           values:
-            moniker: "local-cluster"
-            project: "default"
-            env: "dev"
-            region: "us-west-2"
-            eksversion: "1.29"
-      - merge:
-          mergeKeys:
-          - 'chart'
-          generators:
-          - git:
-              repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
-              revision: main
-              files:
-              - path: apps/common/vpa/app.yaml
-          - git:
-              repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
-              revision: main
-              files:
-              - path: apps/env/{{.values.env}}/vpa/app.yaml
-          - git:
-              repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
-              revision: main
-              files:
-              - path: apps/env/{{.values.env}}/vpa/values-{{.values.region}}.yaml
-          - git:
-              repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
-              revision: main
-              files:
-              - path: apps/env/{{.values.env}}/vpa/values-eks-{{.values.eksversion}}.yaml
-    selector:
-      matchExpressions:
-      - key: enabled
-        operator: In
-        values:
-        - 'true'
+          - 'true'
   strategy:
     type: RollingSync
     rollingSync:
