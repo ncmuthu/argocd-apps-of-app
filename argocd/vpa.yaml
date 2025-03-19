@@ -69,12 +69,13 @@ spec:
               operator: In
               values:
                 - '{{ .values.env }}'
-          maxUpdate: '{{ .maxUpdate }}'
+          maxUpdate: 1
   template:
     metadata:
       name: '{{.values.moniker | lower}}-vpa'
       labels:
         env: '{{ .values.env }}'
+        maxUpdate: '{{ .maxUpdate }}'
     spec:
       project: '{{ .values.project }}'
       syncPolicy:
