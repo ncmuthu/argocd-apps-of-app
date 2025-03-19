@@ -24,7 +24,7 @@ spec:
             values:
               moniker: "local-cluster"
               project: "default"
-              env: "dev"
+              env: '{{ index .metadata.labels "k8s.autodesk.com/env" }}'
               region: "us-west-2"
               eksversion: "1.29"
               envLabel: '{{ index .metadata.labels "envLabel" }}'
@@ -65,37 +65,16 @@ spec:
     rollingSync:
       steps:
         - matchExpressions:
-            - key: envLabel
+            - key: k8s.autodesk.com/env
               operator: In
               values:
-                - dev
-            - key: upgrade
-              operator: In
-              values:
-                - manual
-          maxUpdate: 0
-        - matchExpressions:
-            - key: envLabel
-              operator: In
-              values:
-                - dev
-            - key: upgrade
-              operator: In
-              values:
-                - auto
-          maxUpdate: 1          
-        - matchExpressions:
-            - key: envLabel
-              operator: In
-              values:
-                - prod
-          maxUpdate: 1
+                - '{{ .values.env }}'
+          maxUpdate: '{{ .maxUpdate }}'
   template:
     metadata:
       name: '{{.values.moniker | lower}}-vpa'
       labels:
-        envLabel: '{{ .values.envLabel }}'
-        upgrade: '{{ .values.upgrade }}'      
+        env: '{{ .values.env }}'    
     spec:
       project: '{{ .values.project }}'
       syncPolicy:
