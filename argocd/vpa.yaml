@@ -69,7 +69,7 @@ spec:
               operator: In
               values:
                 - '{{ .values.env }}'
-          maxUpdate: '{{ .maxUpdate | int}}'
+          maxUpdate: '{{ .maxUpdate }}'
   template:
     metadata:
       name: '{{.values.moniker | lower}}-vpa'
