@@ -60,24 +60,22 @@ spec:
           operator: In
           values:
           - 'true'
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: k8s.autodesk.com/env
+              operator: In
+              values:
+                - dev
+          maxUpdate: 1
   template:
     metadata:
       name: '{{.values.moniker | lower}}-vpa'
       labels:
         k8s.autodesk.com/env: '{{ .values.env }}'
         maxUpdate: '{{ .maxUpdate }}'
-    annotations:
-      argocd.argoproj.io/sync-wave: '0'  # Example annotation
-      rollingSync.strategy: |
-        type: RollingSync
-        rollingSync:
-          steps:
-            - matchExpressions:
-                - key: k8s.autodesk.com/env
-                  operator: In
-                  values:
-                    - '{{ .values.env }}'
-              maxUpdate: 1
     spec:
       project: '{{ .values.project }}'
       syncPolicy:
