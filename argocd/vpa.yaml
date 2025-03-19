@@ -68,7 +68,7 @@ spec:
             - key: k8s.autodesk.com/env
               operator: In
               values:
-                - '{{ .values.env }}'
+                - dev
           maxUpdate: 1
   template:
     metadata:
