@@ -62,7 +62,7 @@ spec:
     rollingSync:
       steps:
         - matchExpressions:
-            - key: k8s.autodesk.com/env
+            - key: envLabel
               operator: In
               values:
                 - dev
