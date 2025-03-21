@@ -30,7 +30,6 @@ spec:
               envLabel: '{{ index .metadata.labels "envLabel" }}'
               ci: '{{ index .metadata.labels "ci" }}'
               upgrade: '{{ index .metadata.labels "upgrade" }}'
-              appname: '{{ .metadata.name }}'
         - merge:
             mergeKeys:
             - 'chart'
@@ -39,22 +38,22 @@ spec:
                 repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                 revision: main
                 files:
-                - path: apps/common/{{ .values.appname }}/app.yaml
+                - path: apps/common/{{ .metadata.name }}/app.yaml
             - git:
                 repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                 revision: main
                 files:
-                - path: apps/env/{{.values.env}}/{{ .values.appname }}/app.yaml
+                - path: apps/env/{{.values.env}}/{{ .metadata.name }}/app.yaml
             - git:
                 repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                 revision: main
                 files:
-                - path: apps/env/{{.values.env}}/{{ .values.appname }}/values-{{.values.region}}.yaml
+                - path: apps/env/{{.values.env}}/{{ .metadata.name }}/values-{{.values.region}}.yaml
             - git:
                 repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                 revision: main
                 files:
-                - path: apps/env/{{.values.env}}/{{ .values.appname }}/values-eks-{{.values.eksversion}}.yaml
+                - path: apps/env/{{.values.env}}/{{ .metadata.name }}/values-eks-{{.values.eksversion}}.yaml
       selector:
         matchExpressions:
         - key: enabled
@@ -98,10 +97,10 @@ spec:
         helm:
           ignoreMissingValueFiles: true
           valueFiles:
-          - $helm/values/common/{{ .values.appname }}/values.yaml
-          - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values.yaml
-          - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values-{{.values.region}}.yaml
-          - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values-eks-{{.values.eksversion}}.yaml
+          - $helm/values/common/{{ .metadata.name }}/values.yaml
+          - $helm/values/env/{{ .values.env }}/{{ .metadata.name }}/values.yaml
+          - $helm/values/env/{{ .values.env }}/{{ .metadata.name }}/values-{{.values.region}}.yaml
+          - $helm/values/env/{{ .values.env }}/{{ .metadata.name }}/values-eks-{{.values.eksversion}}.yaml
       destination:
         server: '{{.server}}'
         namespace: '{{.namespace}}'
