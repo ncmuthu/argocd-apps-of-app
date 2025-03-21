@@ -75,7 +75,7 @@ spec:
           maxUpdate: 1
   template:
     metadata:
-      name: '{{.values.moniker | lower}}-vpa'
+      name: '{{.values.moniker | lower}}-{{ .values.appname }}'
       labels:
         k8s.autodesk.com/env: '{{ .values.env }}'
         maxUpdate: '{{ .maxUpdate }}'
