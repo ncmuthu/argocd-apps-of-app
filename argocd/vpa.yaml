@@ -108,7 +108,7 @@ spec:
           - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values.yaml
           - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values-{{.values.region}}.yaml
           - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values-eks-{{.values.eksversion}}.yaml
-          - $helm/values/cluster/{{ .values.cluster }}/values.yaml
+          - $helm/values/cluster/{{ .values.cluster }}/{{ .values.appname }}/values.yaml
       destination:
         server: '{{.server}}'
         namespace: '{{.namespace}}'
