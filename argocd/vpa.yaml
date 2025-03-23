@@ -31,7 +31,7 @@ spec:
               ci: '{{ index .metadata.labels "ci" }}'
               upgrade: '{{ index .metadata.labels "upgrade" }}'
               appname: 'vpa'
-              cluster: '{{ .metadat.name }}'
+              cluster: '{{ .metadata.name }}'
         - merge:
             mergeKeys:
             - 'chart'
