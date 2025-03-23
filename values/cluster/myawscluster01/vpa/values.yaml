@@ -1,0 +1,12 @@
+recommender:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 200Mi
+    limits:
+      cpu: 150m
+      memory: 750Mi
+  extraArgs:
+    kube-api-qps: 10
+    kube-api-burst: 15
+    checkpoints-gc-interval: 1h0m0s
