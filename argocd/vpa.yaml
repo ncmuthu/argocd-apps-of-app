@@ -31,6 +31,7 @@ spec:
               ci: '{{ index .metadata.labels "ci" }}'
               upgrade: '{{ index .metadata.labels "upgrade" }}'
               appname: 'vpa'
+              cluster: '{{ .metadat.name }}'
         - merge:
             mergeKeys:
             - 'chart'
@@ -55,6 +56,11 @@ spec:
                 revision: main
                 files:
                 - path: apps/env/{{.values.env}}/{{ .values.appname }}/values-eks-{{.values.eksversion}}.yaml
+            - git:
+                repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
+                revision: main
+                files:
+                - path: apps/cluster/{{ .values.cluster}}/{{ .values.appname }}/app.yaml     
       selector:
         matchExpressions:
         - key: enabled
@@ -102,6 +108,7 @@ spec:
           - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values.yaml
           - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values-{{.values.region}}.yaml
           - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values-eks-{{.values.eksversion}}.yaml
+          - $helm/values/cluster/{{ .values.cluster }}/values.yaml
       destination:
         server: '{{.server}}'
         namespace: '{{.namespace}}'
