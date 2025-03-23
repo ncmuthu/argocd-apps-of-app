@@ -22,7 +22,7 @@ spec:
                 values:
                   - enable
             values:
-              moniker: "local-cluster"
+              moniker: '{{ index .metadata.labels "k8s.autodesk.com/moniker"}}
               project: "default"
               env: '{{ index .metadata.labels "k8s.autodesk.com/env" }}'
               region: "us-west-2"
