@@ -13,4 +13,6 @@ recommender:
 admissionController:
   useHostNetwork: true
   httpPort: 11000
-  v: 6
+  extraArgs:
+    v: "6"
+    port: 11000
