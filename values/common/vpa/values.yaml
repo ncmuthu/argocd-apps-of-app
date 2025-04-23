@@ -11,8 +11,23 @@ recommender:
     kube-api-burst: 50
     checkpoints-gc-interval: 6h0m0s
 admissionController:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 200Mi
+    limits:
+      cpu: 150m
+      memory: 750Mi
   useHostNetwork: true
   httpPort: 11000
   extraArgs:
     v: "6"
     port: 11000
+updater:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 200Mi
+    limits:
+      cpu: 150m
+      memory: 750Mi
