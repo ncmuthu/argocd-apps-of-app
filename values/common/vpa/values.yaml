@@ -10,3 +10,7 @@ recommender:
     kube-api-qps: 20
     kube-api-burst: 50
     checkpoints-gc-interval: 6h0m0s
+admissionController:
+  useHostNetwork: true
+  httpPort: 11000
+  v: 6
