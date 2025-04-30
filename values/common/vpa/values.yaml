@@ -1,4 +1,6 @@
 recommender:
+  image:
+    repository: "{{ .Values.imageregistryprefix }}/autoscaling/vpa-recommender"
   resources:
     requests:
       cpu: 50m

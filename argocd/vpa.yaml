@@ -114,6 +114,7 @@ spec:
         helm:
           ignoreMissingValueFiles: true
           valueFiles:
+          - $helm/values/global/{{ .values.env }}/{{.values.region}}.yaml
           - $helm/values/common/{{ .values.appname }}/values.yaml
           - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values.yaml
           - $helm/values/env/{{ .values.env }}/{{ .values.appname }}/values-{{.values.region}}.yaml
