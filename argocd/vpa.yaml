@@ -40,6 +40,16 @@ spec:
                 repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                 revision: main
                 files:
+                - path: apps/global/app.yaml
+            - git:
+                repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
+                revision: main
+                files:
+                - path: apps/global/{{.values.env}}/app-{{.values.region}}.yaml                            
+            - git:
+                repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
+                revision: main
+                files:
                 - path: apps/common/{{ .values.appname }}/app.yaml
             - git:
                 repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
