@@ -3,4 +3,4 @@ targetRevision: 4.7.2
 enabled: 'true'
 namespace: vpa
 maxUpdate: 10
-repoURL: 'https://charts.fairwinds.com/stable'
+
