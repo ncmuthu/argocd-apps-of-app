@@ -68,7 +68,7 @@ spec:
         envLabel: '{{ .values.envLabel }}'
         upgrade: '{{ .values.upgrade }}'
     spec:
-      project: default
+      project: my-project-03
       sources:
       - repoURL: https://github.com/ncmuthu/argocd-apps-of-app.git
         targetRevision: 'main'
