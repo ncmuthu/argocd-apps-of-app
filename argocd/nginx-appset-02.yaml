@@ -38,7 +38,7 @@ spec:
   goTemplateOptions: ["missingkey=error"] 
   template:
     metadata:
-      name: '{{ .values.cluster | lower }}-{{ .values.appname }}'
+      name: '{{ .values.ci | lower }}-{{ .values.appname }}'
       labels:
         envLabel: '{{ .values.envLabel }}'
     spec:
