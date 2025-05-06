@@ -16,6 +16,8 @@ spec:
         values:
           envLabel: '{{ index .metadata.labels "envLabel" }}'
           ci: '{{ index .metadata.labels "ci" }}'
+          appname: nginx-test
+          cluster: '{{ .name }}'
   strategy:
     type: RollingSync
     rollingSync:
@@ -36,7 +38,7 @@ spec:
   goTemplateOptions: ["missingkey=error"] 
   template:
     metadata:
-      name: 'nginx-test-deployment-02-{{ .values.ci }}'
+      name: '{{ .values.cluster | lower }}-{{ .values.appname }}'
       labels:
         envLabel: '{{ .values.envLabel }}'
     spec:
