@@ -17,6 +17,8 @@ spec:
           appname: nginx-test
           cluster: '{{ .name }}'
           account: '{{ index .metadata.labels "account" }}'
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]         
   template:
     metadata:
       name: nginx-{{name}}
