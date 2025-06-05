@@ -28,11 +28,7 @@ spec:
         targetRevision: 6.5.3
         helm:
           values: |
-            service:
-              type: ClusterIP
-            image:
-              tag: latest
-            account: {{ .values.account }}
+            account: '{{ .values.account }}'
       destination:
         server: https://kubernetes.default.svc
         namespace: nginx
