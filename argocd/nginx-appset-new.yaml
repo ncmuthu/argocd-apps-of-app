@@ -21,7 +21,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]         
   template:
     metadata:
-      name: nginx-{{name}}
+      name: nginx-'{{ .values.cluster }}'
     spec:
       project: default
       source:
