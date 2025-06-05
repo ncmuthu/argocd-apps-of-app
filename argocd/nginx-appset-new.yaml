@@ -29,7 +29,7 @@ spec:
         chart: podinfo
         targetRevision: 6.5.3
         helm:
-          values: |
+          valuesObject:
             account: "{{ .values.account }}"
             id: '123456'
             ci: '{{ .values.ci }}'
