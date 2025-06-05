@@ -31,8 +31,8 @@ spec:
         helm:
           values: |
             account: "{{ .values.account }}"
-            id: '123456'
-            ci: '{{ .values.ci }}'
+            id: "123456"
+            ci: "{{ .values.ci }}"
       destination:
         server: https://kubernetes.default.svc
         namespace: nginx
