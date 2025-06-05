@@ -32,7 +32,7 @@ spec:
               type: ClusterIP
             image:
               tag: latest
-            account: '{{ values.account }}'
+            account: '{{ .values.account }}'
       destination:
         server: https://kubernetes.default.svc
         namespace: nginx
