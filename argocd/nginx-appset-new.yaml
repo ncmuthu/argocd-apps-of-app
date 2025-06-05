@@ -24,7 +24,7 @@ spec:
       source:
         repoURL: https://charts.bitnami.com/bitnami
         chart: nginx
-        targetRevision: 15.5.2  # Check latest version with `helm search repo bitnami/nginx`
+        targetRevision: 20.0.5  # Check latest version with `helm search repo bitnami/nginx`
         helm:
           values: |
             service:
