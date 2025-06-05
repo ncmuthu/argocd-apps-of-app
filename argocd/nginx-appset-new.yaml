@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-applicationset-new
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchExpressions:
+            - key: envLabel
+              operator: In
+              values:
+                - dev  
+        values:
+          envLabel: '{{ index .metadata.labels "envLabel" }}'
+          ci: '{{ index .metadata.labels "ci" }}'
+          appname: nginx-test
+          cluster: '{{ .name }}'
+  template:
+    metadata:
+      name: nginx-{{name}}
+    spec:
+      project: default
+      source:
+        repoURL: https://charts.bitnami.com/bitnami
+        chart: nginx
+        targetRevision: 15.5.2  # Check latest version with `helm search repo bitnami/nginx`
+        helm:
+          values: |
+            service:
+              type: ClusterIP
+            image:
+              tag: latest
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: nginx
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
