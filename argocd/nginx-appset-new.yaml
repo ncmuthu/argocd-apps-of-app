@@ -30,7 +30,7 @@ spec:
         targetRevision: 6.5.3
         helm:
           valuesObject:
-            account: '{{ .values.account | quote}}'
+            account: {{ .values.account | quote}}
             id: '123456'
             ci: '{{ .values.ci }}'
       destination:
