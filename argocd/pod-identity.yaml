@@ -37,32 +37,32 @@ spec:
                 - 'chart'
               generators:
                 - git:
-                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
                       - path: apps/common/{{ .values.appname }}/app.yaml
                 - git:
-                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
                       - path: apps/environment/{{.values.environment}}/{{ .values.appname }}/app.yaml
                 - git:
-                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
                       - path: apps/environment/{{.values.environment}}/{{ .values.appname }}/app-{{.values.region}}.yaml
                 - git:
-                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
                       - path: apps/environment/{{.values.environment}}/{{ .values.appname }}/app-eks-{{.values.eksversion}}.yaml
                 - git:
-                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
                       - path: apps/securityzone/{{ .values.securityzone }}/{{ .values.appname }}/app.yaml
                 - git:
-                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
                       - path: apps/securityzone/{{ .values.securityzone }}/{{ .values.appname }}/app-{{.values.region}}.yaml
@@ -101,10 +101,10 @@ spec:
         syncOptions:
           - CreateNamespace=true
       sources:
-        - repoURL: 'https://git.autodesk.com/forge-cd-services/k8s-core.git'
+        - repoURL: 'https://github.com/ncmuthu/argocd-apps-of-app.git'
           targetRevision: 'main'
           ref: helm
-        - repoURL: 'https://git.autodesk.com/forge-cd-services/k8s-core-ops-overrides.git'
+        - repoURL: 'https://github.com/ncmuthu/argocd-apps-of-app.git'
           targetRevision: 'main'
           ref: opsHelm
         - repoURL: '{{ .repoURL }}'
