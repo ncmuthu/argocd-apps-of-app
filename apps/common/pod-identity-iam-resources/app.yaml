@@ -1,5 +1,0 @@
-chart: pod-identity-iam-resources
-targetRevision: 0.1.0
-enabled: 'true'
-repoURL: '448049793742.dkr.ecr.us-west-2.amazonaws.com/charts'
-namespace: ''
