@@ -67,10 +67,10 @@ spec:
                     files:
                       - path: apps/securityzone/{{ .values.securityzone }}/{{ .values.appname }}/app-{{.values.region}}.yaml
                 - git:
-                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core-ops-overrides.git"
+                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
-                      - path: "{{ .values.cluster }}/apps/{{ .values.appname }}/app.yaml"
+                      - path: "apps/{{ .values.cluster }}/{{ .values.appname }}/app.yaml"
       selector:
         matchExpressions:
           - key: enabled
