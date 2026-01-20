@@ -1,0 +1,131 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pod-identity-iam-resources
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  applyNestedSelectors: true
+  generators:
+    - matrix:
+        generators:
+          - clusters:
+              selector:
+                matchExpressions:
+                  - key: k8s.autodesk.com/cluster-class
+                    operator: In
+                    values:
+                      - kubernetes-runtime        
+                  - key: k8s.autodesk.com/pod-identity
+                    operator: In
+                    values:
+                      - enable
+              values:
+                moniker: '{{ index .metadata.labels "k8s.autodesk.com/moniker" }}'
+                project: '{{ index .metadata.labels "k8s.autodesk.com/project" }}'
+                securityzone: '{{ index .metadata.labels "k8s.autodesk.com/securityzone" }}'
+                environment: '{{ index .metadata.labels "k8s.autodesk.com/environment" }}'
+                clusterclass: '{{ index .metadata.labels "k8s.autodesk.com/cluster-class" }}'
+                region: '{{ index .metadata.labels "k8s.autodesk.com/region" }}'
+                eksversion: '{{ index .metadata.labels "k8s.autodesk.com/eksversion" }}'
+                account: '{{ index .metadata.labels "k8s.autodesk.com/account" }}'
+                appname: pod-identity-iam-resources
+                cluster: '{{ .name }}'
+          - merge:
+              mergeKeys:
+                - 'chart'
+              generators:
+                - git:
+                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    revision: main
+                    files:
+                      - path: apps/common/{{ .values.appname }}/app.yaml
+                - git:
+                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    revision: main
+                    files:
+                      - path: apps/environment/{{.values.environment}}/{{ .values.appname }}/app.yaml
+                - git:
+                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    revision: main
+                    files:
+                      - path: apps/environment/{{.values.environment}}/{{ .values.appname }}/app-{{.values.region}}.yaml
+                - git:
+                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    revision: main
+                    files:
+                      - path: apps/environment/{{.values.environment}}/{{ .values.appname }}/app-eks-{{.values.eksversion}}.yaml
+                - git:
+                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    revision: main
+                    files:
+                      - path: apps/securityzone/{{ .values.securityzone }}/{{ .values.appname }}/app.yaml
+                - git:
+                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core.git"
+                    revision: main
+                    files:
+                      - path: apps/securityzone/{{ .values.securityzone }}/{{ .values.appname }}/app-{{.values.region}}.yaml
+                - git:
+                    repoURL: "https://git.autodesk.com/forge-cd-services/k8s-core-ops-overrides.git"
+                    revision: main
+                    files:
+                      - path: "{{ .values.cluster }}/apps/{{ .values.appname }}/app.yaml"
+      selector:
+        matchExpressions:
+          - key: enabled
+            operator: In
+            values:
+              - 'true'
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        - matchExpressions:
+            - key: k8s.autodesk.com/cluster-class
+              operator: In
+              values:
+                - kubernetes-runtime
+          maxUpdate: 1
+  template:
+    metadata:
+      name: '{{ printf "%s-%s" .values.cluster .values.appname | lower | trunc 53 }}'
+      labels:
+        k8s.autodesk.com/cluster-class: '{{ .values.clusterclass }}'
+    spec:
+      project: '{{ .values.project }}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
+      sources:
+        - repoURL: 'https://git.autodesk.com/forge-cd-services/k8s-core.git'
+          targetRevision: 'main'
+          ref: helm
+        - repoURL: 'https://git.autodesk.com/forge-cd-services/k8s-core-ops-overrides.git'
+          targetRevision: 'main'
+          ref: opsHelm
+        - repoURL: '{{ .repoURL }}'
+          chart: '{{ .chart }}'
+          path: ''
+          targetRevision: '{{ .targetRevision }}'
+          helm:
+            ignoreMissingValueFiles: true
+            valueFiles:
+              - $helm/values/common/{{ .values.appname }}/values.yaml
+              - $helm/values/environment/{{ .values.environment }}/{{ .values.appname }}/values.yaml
+              - $helm/values/environment/{{ .values.environment }}/{{ .values.appname }}/values-{{.values.region}}.yaml
+              - $helm/values/environment/{{ .values.environment }}/{{ .values.appname }}/values-eks-{{.values.eksversion}}.yaml
+              - $helm/values/securityzone/{{ .values.securityzone }}/{{ .values.appname }}/values.yaml
+              - $helm/values/securityzone/{{ .values.securityzone }}/{{ .values.appname }}/values-{{.values.region}}.yaml
+              - $opsHelm/{{ .values.cluster }}/values/{{ .values.appname }}/values.yaml
+            values: |
+              project: "{{ .values.project}}"
+              moniker: "{{ .values.moniker}}"
+              aws:
+                accountId: "{{ .values.account}}"
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: "{{ .values.project }}"
