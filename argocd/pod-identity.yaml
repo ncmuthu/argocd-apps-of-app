@@ -107,10 +107,10 @@ spec:
         - repoURL: 'https://github.com/ncmuthu/argocd-apps-of-app.git'
           targetRevision: 'main'
           ref: opsHelm
-        - repoURL: '{{ .repoURL }}'
-          chart: '{{ .chart }}'
-          path: ''
-          targetRevision: '{{ .targetRevision }}'
+        - repoURL: 'https://github.com/ncmuthu/argocd-apps-of-app.git'
+          chart: ''
+          path: 'charts/pod-identity-iam-resources'
+          targetRevision: 'main'
           helm:
             ignoreMissingValueFiles: true
             valueFiles:

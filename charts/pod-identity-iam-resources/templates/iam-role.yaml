@@ -1,0 +1,37 @@
+apiVersion: iam.services.k8s.aws/v1alpha1
+kind: Role
+metadata:
+  name: {{ include "pod-identity-iam-resources.roleName" . }}
+  namespace: {{ .Values.project }}
+  labels:
+    {{- include "pod-identity-iam-resources.labels" . | nindent 4 }}
+spec:
+  name: {{ include "pod-identity-iam-resources.roleName" . }}
+  description: Role for Pod Identity Cross Account Access
+  policyRefs:
+    - from:
+        name: {{ include "pod-identity-iam-resources.policyName" . }}
+  assumeRolePolicyDocument: |
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "pods.eks.amazonaws.com"
+          },
+          "Action": [
+            "sts:AssumeRole",
+            "sts:TagSession"
+          ]
+        }
+      ]
+    }
+  maxSessionDuration: 3600
+  permissionsBoundary: "arn:aws:iam::{{ .Values.aws.accountId }}:policy/ADSK-Boundary"
+  policyRefs:
+    - from:
+        name: {{ include "pod-identity-iam-resources.policyName" . }}
+  tags:
+    - key: "adsk:moniker"
+      value: {{ .Values.moniker }}

@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "Kubernetes namespace where the IAM resources will be created."
+    },
+    "moniker": {
+      "type": "string",
+      "description": "Short unique identifier used for naming and tagging AWS IAM resources."
+    },
+    "aws": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$",
+          "description": "12-digit AWS Account ID where the IAM resources will be created."
+        }
+      },
+      "required": ["accountId"]
+    }
+  },
+  "required": ["project", "moniker", "aws"]
+}

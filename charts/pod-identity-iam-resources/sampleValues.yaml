@@ -1,0 +1,13 @@
+# Sample values for Pod Identity IAM Resources Helm Chart
+# Copy this file and customize for your environment
+
+# Kubernetes namespace where the IAM resources will be created
+project: moniker-c-region
+
+# Short unique identifier used for naming and tagging AWS IAM resources
+moniker: moniker-c-region
+
+# AWS configuration
+aws:
+  # 12-digit AWS Account ID where the IAM resources will be created
+  accountId: "123456789012"

@@ -1,0 +1,27 @@
+apiVersion: iam.services.k8s.aws/v1alpha1
+kind: Policy
+metadata:
+  name: {{ include "pod-identity-iam-resources.policyName" . }}
+  namespace: {{ .Values.project }}
+  labels:
+    {{- include "pod-identity-iam-resources.labels" . | nindent 4 }}
+spec:
+  name: {{ include "pod-identity-iam-resources.policyName" . }}
+  description: Policy for Pod Identity Cross Account Access
+  policyDocument: |
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "sts:AssumeRole",
+            "sts:TagSession"
+          ],
+          "Resource": "*"
+        }
+      ]
+    }
+  tags:
+    - key: "adsk:moniker"
+      value: {{ .Values.moniker }}

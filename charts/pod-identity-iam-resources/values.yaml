@@ -1,0 +1,13 @@
+# Pod Identity IAM Resources Helm Chart Values
+# This chart creates AWS IAM resources for EKS Pod Identity cross-account access
+
+# project is the Kubernetes namespace where the IAM resources will be created
+project: ""
+
+# moniker is a short unique identifier used for naming and tagging AWS resources
+moniker: ""
+
+# AWS configuration
+aws:
+  # accountId is the 12-digit AWS Account ID where the IAM resources will be created
+  accountId: ""
