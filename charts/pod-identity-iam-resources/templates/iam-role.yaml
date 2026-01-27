@@ -11,8 +11,8 @@ spec:
   policyRefs:
     - from:
         name: {{ include "pod-identity-iam-resources.policyName" . }}
-  assumeRolePolicyDocument: |
-{{ .Values.assumeRolePolicyDocument | indent 4 }}
+  assumeRolePolicyDocument: |-
+{{- .Values.assumeRolePolicyDocument | nindent 4 }}
   maxSessionDuration: 3600
   permissionsBoundary: "arn:aws:iam::{{ .Values.aws.accountId }}:policy/ADSK-Boundary"
   policyRefs:
