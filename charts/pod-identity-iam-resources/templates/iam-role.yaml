@@ -1,23 +1,26 @@
+{{- range .Values.roles }}
+---
 apiVersion: iam.services.k8s.aws/v1alpha1
 kind: Role
 metadata:
-  name: {{ include "pod-identity-iam-resources.roleName" . }}
-  namespace: {{ .Values.project }}
+  name: {{ .name }}
+  namespace: {{ $.Values.project }}
   labels:
-    {{- include "pod-identity-iam-resources.labels" . | nindent 4 }}
+    {{- include "pod-identity-iam-resources.labels" $ | nindent 4 }}
 spec:
-  name: {{ include "pod-identity-iam-resources.roleName" . }}
+  name: {{ .name }}
   description: Role for Pod Identity Cross Account Access
   policyRefs:
     - from:
-        name: {{ include "pod-identity-iam-resources.policyName" . }}
+        name: {{ include "pod-identity-iam-resources.policyName" $ }}
   assumeRolePolicyDocument: |-
-{{- (tpl .Values.roles.assumeRolePolicyDocument $)  | nindent 4 }}
+{{- (tpl .assumeRolePolicyDocument $)  | nindent 4 }}
   maxSessionDuration: 3600
-  permissionsBoundary: "arn:aws:iam::{{ .Values.aws.accountId }}:policy/ADSK-Boundary"
+  permissionsBoundary: "arn:aws:iam::{{ $.Values.aws.accountId }}:policy/ADSK-Boundary"
   policyRefs:
     - from:
-        name: {{ include "pod-identity-iam-resources.policyName" . }}
+        name: {{ include "pod-identity-iam-resources.policyName" $ }}
   tags:
     - key: "adsk:moniker"
-      value: {{ .Values.moniker }}
+      value: {{ $.Values.moniker }}
+{{- end }}

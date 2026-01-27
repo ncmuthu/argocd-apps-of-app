@@ -1,18 +1,40 @@
 roles:
-  assumeRolePolicyDocument: |
-    {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Effect": "Allow",
-          "Principal": {
-            "Service": "pods.eks.amazonaws.com"
-          },
-          "Action": [
-            "sts:AssumeRole",
-            "sts:TagSession"
-          ]
-        }
-      ],
-      "Resources": "arn:aws:iam::{{ .Values.aws.accountId }}:role/*"
-    }
+  - name: pod-identity-cross-account-role
+    assumeRolePolicyDocument: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "pods.eks.amazonaws.com"
+            },
+            "Action": [
+              "sts:AssumeRole",
+              "sts:TagSession"
+            ]
+          }
+        ]
+      }
+  - name: pod-identity-s3-access-role
+    assumeRolePolicyDocument: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "pods.eks.amazonaws.com"
+            },
+            "Action": [
+              "sts:AssumeRole",
+              "sts:TagSession"
+            ],
+            "Condition": {
+              "StringEquals": {
+                "aws:SourceAccount": "{{ .Values.aws.accountId }}"
+              }
+            }
+          }
+        ]
+      }
