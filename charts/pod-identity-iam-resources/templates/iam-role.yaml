@@ -3,12 +3,12 @@
 apiVersion: iam.services.k8s.aws/v1alpha1
 kind: Role
 metadata:
-  name: {{ .name }}
+  name: {{ include "pod-identity-iam-resources.rolename" (dict "Values" $.Values "Release" $.Release "role" .) }}
   namespace: {{ $.Values.project }}
   labels:
     {{- include "pod-identity-iam-resources.labels" $ | nindent 4 }}
 spec:
-  name: {{ .name }}
+  name: {{ include "pod-identity-iam-resources.rolename" (dict "Values" $.Values "Release" $.Release "role" .) }}
   description: Role for Pod Identity Cross Account Access
   {{- if .policyRefs }}
   policyRefs:

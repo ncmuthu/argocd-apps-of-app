@@ -3,12 +3,12 @@
 apiVersion: iam.services.k8s.aws/v1alpha1
 kind: Policy
 metadata:
-  name: {{ .name }}
+  name: {{ include "pod-identity-iam-resources.policyname" (dict "Values" $.Values "Release" $.Release "policy" .) }}
   namespace: {{ $.Values.project }}
   labels:
     {{- include "pod-identity-iam-resources.labels" $ | nindent 4 }}
 spec:
-  name: {{ .name }}
+  name: {{ include "pod-identity-iam-resources.policyname" (dict "Values" $.Values "Release" $.Release "policy" .) }}
   description: Policy for Pod Identity Cross Account Access
   policyDocument: |-
 {{- (tpl .policyDocument $) | nindent 4 }}
