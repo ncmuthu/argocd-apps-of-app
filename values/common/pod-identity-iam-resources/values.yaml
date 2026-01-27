@@ -14,5 +14,5 @@ roles:
           ]
         }
       ],
-      "Resources": "*"
+      "Resources": "arn:aws:iam::{{ .Values.aws.accountId }}:role/*"
     }
