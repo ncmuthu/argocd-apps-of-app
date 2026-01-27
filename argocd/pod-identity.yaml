@@ -125,6 +125,7 @@ spec:
               project: "{{ .values.project}}"
               moniker: "{{ .values.moniker}}"
               region: "{{ .values.region}}"
+              clusterName: "{{ .values.cluster}}"
               aws:
                 accountId: "{{ .values.account}}"
       destination:
