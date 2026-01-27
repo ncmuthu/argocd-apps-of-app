@@ -16,7 +16,8 @@ roles:
               "sts:TagSession"
             ]
           }
-        ]
+        ],
+        "Resources":"aws:iam::{{ .Values.aws.accountId }}:role/{{ .Values.region }}/ADSK-PodIdentity-CrossAccount-TrustRole"
       }
   - name: pod-identity-s3-access-role
     policyRefs:
