@@ -12,21 +12,7 @@ spec:
     - from:
         name: {{ include "pod-identity-iam-resources.policyName" . }}
   assumeRolePolicyDocument: |
-    {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Effect": "Allow",
-          "Principal": {
-            "Service": "pods.eks.amazonaws.com"
-          },
-          "Action": [
-            "sts:AssumeRole",
-            "sts:TagSession"
-          ]
-        }
-      ]
-    }
+{{ .Values.assumeRolePolicyDocument | indent 4 }}
   maxSessionDuration: 3600
   permissionsBoundary: "arn:aws:iam::{{ .Values.aws.accountId }}:policy/ADSK-Boundary"
   policyRefs:

@@ -126,6 +126,22 @@ spec:
               moniker: "{{ .values.moniker}}"
               aws:
                 accountId: "{{ .values.account}}"
+              assumeRolePolicyDocument: |
+                {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": "pods.eks.amazonaws.com"
+                      },
+                      "Action": [
+                        "sts:AssumeRole",
+                        "sts:TagSession"
+                      ]
+                    }
+                  ]
+                }
       destination:
         server: "https://kubernetes.default.svc"
         namespace: "{{ .values.project }}"
