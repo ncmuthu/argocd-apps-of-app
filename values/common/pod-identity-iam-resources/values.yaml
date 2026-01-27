@@ -1,5 +1,7 @@
 roles:
   - name: pod-identity-cross-account-role
+    policyRefs:
+      - pod-identity-cross-account-policy
     assumeRolePolicyDocument: |
       {
         "Version": "2012-10-17",
@@ -17,6 +19,8 @@ roles:
         ]
       }
   - name: pod-identity-s3-access-role
+    policyRefs:
+      - pod-identity-s3-read-policy
     assumeRolePolicyDocument: |
       {
         "Version": "2012-10-17",
@@ -35,6 +39,41 @@ roles:
                 "aws:SourceAccount": "{{ .Values.aws.accountId }}"
               }
             }
+          }
+        ]
+      }
+
+policies:
+  - name: pod-identity-cross-account-policy
+    policyDocument: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "sts:AssumeRole",
+              "sts:TagSession"
+            ],
+            "Resource": "*"
+          }
+        ]
+      }
+  - name: pod-identity-s3-read-policy
+    policyDocument: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "s3:GetObject",
+              "s3:ListBucket"
+            ],
+            "Resource": [
+              "arn:aws:s3:::my-bucket/*",
+              "arn:aws:s3:::my-bucket"
+            ]
           }
         ]
       }

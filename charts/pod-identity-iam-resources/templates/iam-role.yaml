@@ -10,16 +10,17 @@ metadata:
 spec:
   name: {{ .name }}
   description: Role for Pod Identity Cross Account Access
+  {{- if .policyRefs }}
   policyRefs:
+    {{- range .policyRefs }}
     - from:
-        name: {{ include "pod-identity-iam-resources.policyName" $ }}
+        name: {{ . }}
+    {{- end }}
+  {{- end }}
   assumeRolePolicyDocument: |-
 {{- (tpl .assumeRolePolicyDocument $)  | nindent 4 }}
   maxSessionDuration: 3600
   permissionsBoundary: "arn:aws:iam::{{ $.Values.aws.accountId }}:policy/ADSK-Boundary"
-  policyRefs:
-    - from:
-        name: {{ include "pod-identity-iam-resources.policyName" $ }}
   tags:
     - key: "adsk:moniker"
       value: {{ $.Values.moniker }}
