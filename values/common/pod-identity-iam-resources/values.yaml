@@ -77,3 +77,13 @@ policies:
           }
         ]
       }
+
+podIdentityAssociations:
+  - name: cross-account-association
+    namespace: default
+    roleName: pod-identity-cross-account-role
+    serviceAccountName: cross-account-sa
+  - name: s3-access-association
+    namespace: default
+    roleName: pod-identity-s3-access-role
+    serviceAccountName: s3-access-sa

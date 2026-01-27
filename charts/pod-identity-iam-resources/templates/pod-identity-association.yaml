@@ -1,0 +1,18 @@
+{{- range .Values.podIdentityAssociations }}
+---
+apiVersion: eks.services.k8s.aws/v1alpha1
+kind: PodIdentityAssociation
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Values.project }}
+  labels:
+    {{- include "pod-identity-iam-resources.labels" $ | nindent 4 }}
+spec:
+  clusterName: {{ $.Values.clusterName }}
+  namespace: {{ .namespace }}
+  roleARN: arn:aws:iam::{{ $.Values.aws.accountId }}:role/{{ .roleName }}
+  serviceAccount: {{ .serviceAccountName }}
+  tags:
+    - key: "adsk:moniker"
+      value: {{ $.Values.moniker }}
+{{- end }}
