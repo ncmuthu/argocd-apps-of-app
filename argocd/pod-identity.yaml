@@ -30,7 +30,7 @@ spec:
                 region: '{{ index .metadata.labels "k8s.autodesk.com/region" }}'
                 eksversion: '{{ index .metadata.labels "k8s.autodesk.com/eksversion" }}'
                 account: '{{ index .metadata.labels "k8s.autodesk.com/account" }}'
-                appname: pod-identity-iam-resources-pod-identity-iam-resources-pod-identity-iam-resources
+                appname: 'pod-identity-iam-resources-pod-identity-iam-resources-pod-identity-iam-resources'
                 cluster: '{{ .name }}'
           - merge:
               mergeKeys:
@@ -70,7 +70,7 @@ spec:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
-                      - path: apps/in-cluster/{{ .values.appname }}/app.yaml
+                      - path: apps/incluster/{{ .values.appname }}/app.yaml
       selector:
         matchExpressions:
           - key: enabled
