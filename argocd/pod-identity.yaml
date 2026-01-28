@@ -70,7 +70,7 @@ spec:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
-                      - path: apps/{{ .values.cluster }}/{{ .values.appname }}/app.yaml
+                      - path: apps/in-cluster/{{ .values.appname }}/app.yaml
                 - git:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
