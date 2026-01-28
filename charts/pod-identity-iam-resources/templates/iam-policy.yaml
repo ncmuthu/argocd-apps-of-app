@@ -1,17 +1,17 @@
-{{- range .Values.policies }}
+{{- range $policyName, $policy := .Values.policies }}
 ---
 apiVersion: iam.services.k8s.aws/v1alpha1
 kind: Policy
 metadata:
-  name: {{ include "pod-identity-iam-resources.policyname" (dict "Values" $.Values "Release" $.Release "policy" .) }}
+  name: {{ include "pod-identity-iam-resources.policyname" (dict "Values" $.Values "Release" $.Release "policy" (merge (dict "name" $policyName) $policy)) }}
   namespace: {{ $.Values.project }}
   labels:
     {{- include "pod-identity-iam-resources.labels" $ | nindent 4 }}
 spec:
-  name: {{ include "pod-identity-iam-resources.policyname" (dict "Values" $.Values "Release" $.Release "policy" .) }}
+  name: {{ include "pod-identity-iam-resources.policyname" (dict "Values" $.Values "Release" $.Release "policy" (merge (dict "name" $policyName) $policy)) }}
   description: Policy for Pod Identity Cross Account Access
   policyDocument: |-
-{{- (tpl .policyDocument $) | nindent 4 }}
+{{- (tpl $policy.policyDocument $) | nindent 4 }}
   tags:
     - key: "adsk:moniker"
       value: {{ $.Values.moniker }}

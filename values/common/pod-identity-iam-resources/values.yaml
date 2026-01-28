@@ -1,5 +1,5 @@
 roles:
-  - name: pod-identity-cross-account-role
+  pod-identity-cross-account-role:
     policyRefs:
       - pod-identity-cross-account-policy
     assumeRolePolicyDocument: |
@@ -19,7 +19,7 @@ roles:
         ],
         "Resources":"aws:iam::{{ .Values.aws.accountId }}:role/{{ .Values.region }}/ADSK-PodIdentity-CrossAccount-TrustRole"
       }
-  - name: pod-identity-s3-access-role
+  pod-identity-s3-access-role:
     policyRefs:
       - pod-identity-s3-read-policy
     assumeRolePolicyDocument: |
@@ -45,7 +45,7 @@ roles:
       }
 
 policies:
-  - name: pod-identity-cross-account-policy
+  pod-identity-cross-account-policy:
     policyDocument: |
       {
         "Version": "2012-10-17",
@@ -60,7 +60,7 @@ policies:
           }
         ]
       }
-  - name: pod-identity-s3-read-policy
+  pod-identity-s3-read-policy:
     policyDocument: |
       {
         "Version": "2012-10-17",
@@ -80,11 +80,11 @@ policies:
       }
 
 podIdentityAssociations:
-  - name: cross-account-association
+  cross-account-association:
     namespace: default
     roleName: pod-identity-cross-account-role
     serviceAccountName: cross-account-sa
-  - name: s3-access-association
+  s3-access-association:
     namespace: default
     roleName: pod-identity-s3-access-role
     serviceAccountName: s3-access-sa

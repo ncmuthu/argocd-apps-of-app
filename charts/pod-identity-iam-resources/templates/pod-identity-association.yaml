@@ -1,17 +1,17 @@
-{{- range .Values.podIdentityAssociations }}
+{{- range $assocName, $assoc := .Values.podIdentityAssociations }}
 ---
 apiVersion: eks.services.k8s.aws/v1alpha1
 kind: PodIdentityAssociation
 metadata:
-  name: {{ include "pod-identity-iam-resources.podIdentityAssociationName" (dict "Values" $.Values "Release" $.Release "podIdentity" .) }}
+  name: {{ include "pod-identity-iam-resources.podIdentityAssociationName" (dict "Values" $.Values "Release" $.Release "podIdentity" (merge (dict "name" $assocName) $assoc)) }}
   namespace: {{ $.Values.project }}
   labels:
     {{- include "pod-identity-iam-resources.labels" $ | nindent 4 }}
 spec:
   clusterName: {{ $.Values.clusterName }}
-  namespace: {{ .namespace }}
-  roleARN: arn:aws:iam::{{ $.Values.aws.accountId }}:role/{{ include "pod-identity-iam-resources.rolenameFromString" (dict "Values" $.Values "Release" $.Release "roleName" .roleName) }}
-  serviceAccount: {{ .serviceAccountName }}
+  namespace: {{ $assoc.namespace }}
+  roleARN: arn:aws:iam::{{ $.Values.aws.accountId }}:role/{{ include "pod-identity-iam-resources.rolenameFromString" (dict "Values" $.Values "Release" $.Release "roleName" $assoc.roleName) }}
+  serviceAccount: {{ $assoc.serviceAccountName }}
   tags:
     - key: "adsk:moniker"
       value: {{ $.Values.moniker }}

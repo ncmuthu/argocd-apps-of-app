@@ -1,24 +1,24 @@
-{{- range .Values.roles }}
+{{- range $roleName, $role := .Values.roles }}
 ---
 apiVersion: iam.services.k8s.aws/v1alpha1
 kind: Role
 metadata:
-  name: {{ include "pod-identity-iam-resources.rolename" (dict "Values" $.Values "Release" $.Release "role" .) }}
+  name: {{ include "pod-identity-iam-resources.rolename" (dict "Values" $.Values "Release" $.Release "role" (merge (dict "name" $roleName) $role)) }}
   namespace: {{ $.Values.project }}
   labels:
     {{- include "pod-identity-iam-resources.labels" $ | nindent 4 }}
 spec:
-  name: {{ include "pod-identity-iam-resources.rolename" (dict "Values" $.Values "Release" $.Release "role" .) }}
+  name: {{ include "pod-identity-iam-resources.rolename" (dict "Values" $.Values "Release" $.Release "role" (merge (dict "name" $roleName) $role)) }}
   description: Role for Pod Identity Cross Account Access
-  {{- if .policyRefs }}
+  {{- if $role.policyRefs }}
   policyRefs:
-    {{- range .policyRefs }}
+    {{- range $role.policyRefs }}
     - from:
         name: {{ . }}
     {{- end }}
   {{- end }}
   assumeRolePolicyDocument: |-
-{{- (tpl .assumeRolePolicyDocument $)  | nindent 4 }}
+{{- (tpl $role.assumeRolePolicyDocument $)  | nindent 4 }}
   maxSessionDuration: 3600
   permissionsBoundary: "arn:aws:iam::{{ $.Values.aws.accountId }}:policy/ADSK-Boundary"
   tags:
