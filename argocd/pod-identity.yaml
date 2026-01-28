@@ -40,12 +40,12 @@ spec:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
-                      - path: apps/common/{{ .values.appname }}/app.yaml              
+                      - path: apps/common/{{ .values.appname }}/app.yaml
                 - git:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
-                      - path: apps/environment/{{ .values.environment }}/{{ .values.appname }}/app.yaml                   
+                      - path: apps/environment/{{ .values.environment }}/{{ .values.appname }}/app.yaml                                      
                 - git:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
@@ -75,7 +75,7 @@ spec:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
-                      - path: apps/{{ .values.appname }}/app.yaml
+                      - path: apps/{{ .values.appname }}/app.yaml                 
       selector:
         matchExpressions:
           - key: enabled
@@ -98,7 +98,7 @@ spec:
       labels:
         k8s.autodesk.com/cluster-class: '{{ .values.clusterclass }}'
     spec:
-      project: '{{ .values.project }}'
+      project: default
       syncPolicy:
         automated:
           selfHeal: true
