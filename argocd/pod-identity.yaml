@@ -112,6 +112,7 @@ spec:
           path: 'charts/pod-identity-iam-resources'
           targetRevision: 'main'
           helm:
+            releaseName: '{{ printf "%s-pod-identity" .values.cluster | lower | trunc 53 | trimSuffix "-" }}'
             ignoreMissingValueFiles: true
             valueFiles:
               - $helm/values/common/{{ .values.appname }}/values.yaml
