@@ -45,6 +45,11 @@ spec:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
                     files:
+                      - path: apps/common/{{ .values.appname }}/app.yaml                      
+                - git:
+                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
+                    revision: main
+                    files:
                       - path: apps/environment/{{ .values.environment }}/{{ .values.appname }}/app-{{ .values.region }}.yaml
                 - git:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
@@ -61,11 +66,6 @@ spec:
                     revision: main
                     files:
                       - path: apps/securityzone/{{ .values.securityzone }}/{{ .values.appname }}/app-{{ .values.region }}.yaml
-                - git:
-                    repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
-                    revision: main
-                    files:
-                      - path: apps/common/{{ .values.appname }}/app.yaml
                 - git:
                     repoURL: "https://github.com/ncmuthu/argocd-apps-of-app.git"
                     revision: main
