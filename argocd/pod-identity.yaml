@@ -89,7 +89,7 @@ spec:
           maxUpdate: 1
   template:
     metadata:
-      name: '{{ printf "%s-%s" .values.cluster .values.appname | lower | trunc 53 }}'
+      name: '{{ printf "%s-%s" .values.cluster .values.appname | lower }}'
       labels:
         k8s.autodesk.com/cluster-class: '{{ .values.clusterclass }}'
     spec:
