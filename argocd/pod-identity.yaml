@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: pod-identity-iam-resources-pod-identity-iam-resources-pod-identity-iam-resources
+  name: pod.identity.iam.resources.pod.identity.iam.resources.pod.identity.iam.resources
   namespace: argocd
 spec:
   goTemplate: true
@@ -30,7 +30,7 @@ spec:
                 region: '{{ index .metadata.labels "k8s.autodesk.com/region" }}'
                 eksversion: '{{ index .metadata.labels "k8s.autodesk.com/eksversion" }}'
                 account: '{{ index .metadata.labels "k8s.autodesk.com/account" }}'
-                appname: 'pod-identity-iam-resources-pod-identity-iam-resources-pod-identity-iam-resources'
+                appname: 'pod.identity.iam.resources.pod.identity.iam.resources.pod.identity.iam.resources'
                 cluster: '{{ .name }}'
           - merge:
               mergeKeys:
